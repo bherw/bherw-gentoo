@@ -28,13 +28,13 @@ RDEPEND="${PYTHON_DEPS}
 	dev-python/markdown[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
 	dev-python/send2trash[${PYTHON_USEDEP}]
+	dev-python/jsonschema[${PYTHON_USEDEP}]
 	recording? ( media-sound/lame )
 	sound? ( media-video/mpv )
 	latex? (
 		app-text/texlive
 		app-text/dvipng
 	)
-	dev-python/jsonschema[${PYTHON_USEDEP}]
 "
 DEPEND="${RDEPEND}
 	test? ( dev-python/nose[${PYTHON_USEDEP}] )
