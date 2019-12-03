@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python2_7 python3_{5,6} )
+PYTHON_COMPAT=( python2_7 python3_{5,6,7,8} )
 DISTUTILS_SINGLE_IMPL=true
 
 inherit distutils-r1 readme.gentoo-r1 virtualx
