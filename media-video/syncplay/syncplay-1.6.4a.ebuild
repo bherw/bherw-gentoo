@@ -14,7 +14,7 @@ SRC_URI="https://github.com/Syncplay/syncplay/archive/v${PV}.tar.gz -> ${P}.tar.
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 x86"
-IUSE="+client +server vlc"
+IUSE="+client +server +tls vlc"
 REQUIRED_USE="vlc? ( client )
 	${PYTHON_REQUIRED_USE}"
 
@@ -26,7 +26,14 @@ RDEPEND="${PYTHON_DEPS}
 		>=dev-python/twisted-16.0.0[${PYTHON_USEDEP}]
 		dev-python/twisted-core[${PYTHON_USEDEP}]
 	)
-	vlc? ( media-video/vlc[lua] )"
+	vlc? ( media-video/vlc[lua] )
+	tls? (
+		>=dev-python/certifi-2018.11.29[${PYTHON_USEDEP}]
+		>=dev-python/pyopenssl-16.0.0[${PYTHON_USEDEP}]
+		dev-python/service_identity[${PYTHON_USEDEP}]
+		>=dev-python/idna-0.6[${PYTHON_USEDEP}]
+	)
+	"
 
 src_prepare() {
 	default
