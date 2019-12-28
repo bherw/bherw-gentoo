@@ -3,9 +3,9 @@
 
 EAPI=6
 VIM_VERSION="8.1"
-PYTHON_COMPAT=( python{2_7,3_5,3_6,3_7} )
+PYTHON_COMPAT=( python{2_7,3_5,3_6,3_7,3_8} )
 PYTHON_REQ_USE="threads(+)"
-USE_RUBY="ruby24 ruby25 ruby26"
+USE_RUBY="ruby24 ruby25 ruby26 ruby27"
 
 inherit vim-doc flag-o-matic bash-completion-r1 python-single-r1 ruby-single desktop xdg-utils
 
@@ -75,6 +75,7 @@ src_prepare() {
 		# Gentoo patches to fix runtime issues, cross-compile errors, etc
 		eapply "${WORKDIR}"/patches/
 	fi
+	eapply "${FILESDIR}/python3_8.patch"
 
 	# Fixup a script to use awk instead of nawk
 	sed -i -e \
