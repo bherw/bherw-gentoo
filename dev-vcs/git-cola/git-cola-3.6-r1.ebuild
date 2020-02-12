@@ -1,12 +1,11 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-PYTHON_COMPAT=( python2_7 python3_{5,6,7,8} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 DISTUTILS_SINGLE_IMPL=true
-
-inherit distutils-r1 readme.gentoo-r1 virtualx
+inherit distutils-r1 readme.gentoo-r1 virtualx xdg-utils
 
 DESCRIPTION="The highly caffeinated git GUI"
 HOMEPAGE="https://git-cola.github.io/"
@@ -17,22 +16,25 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
 IUSE="doc test"
 
-RDEPEND="dev-python/QtPy[gui,${PYTHON_USEDEP}]
-	dev-python/numpy[${PYTHON_USEDEP}]
-	dev-python/pygments[${PYTHON_USEDEP}]
-	dev-python/send2trash[${PYTHON_USEDEP}]
+RESTRICT="!test? ( test )"
+
+RDEPEND="
+	$(python_gen_cond_dep '
+		dev-python/numpy[${PYTHON_MULTI_USEDEP}]
+		dev-python/pygments[${PYTHON_MULTI_USEDEP}]
+		dev-python/QtPy[gui,${PYTHON_MULTI_USEDEP}]
+		dev-python/send2trash[${PYTHON_MULTI_USEDEP}]
+	')
 	dev-vcs/git"
-DEPEND="${RDEPEND}
-	sys-devel/gettext
-	doc? (
-		dev-python/sphinx[${PYTHON_USEDEP}]
-		python_targets_python2_7? ( dev-python/sphinxtogithub[$(python_gen_usedep 'python2*')] )
+BDEPEND="sys-devel/gettext
+	$(python_gen_cond_dep "
+		doc? ( dev-python/sphinx[\${PYTHON_MULTI_USEDEP}] )
+		test? (
+			${VIRTUALX_DEPEND}
+			dev-python/mock[\${PYTHON_MULTI_USEDEP}]
+			dev-python/nose[\${PYTHON_MULTI_USEDEP}]
 		)
-	test? (
-		${VIRTUALX_DEPEND}
-		dev-python/nose[${PYTHON_USEDEP}]
-		dev-python/mock[${PYTHON_USEDEP}]
-		)"
+	")"
 
 python_prepare_all() {
 	# make sure that tests also use the system provided QtPy
@@ -95,4 +97,12 @@ python_install_all() {
 
 	distutils-r1_python_install_all
 	readme.gentoo_create_doc
+}
+
+pkg_postinst() {
+	xdg_desktop_database_update
+}
+
+pkg_postrm() {
+	xdg_desktop_database_update
 }
