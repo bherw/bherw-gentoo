@@ -18,7 +18,10 @@ KEYWORDS="~amd64"
 IUSE="systemd"
 
 RDEPEND="!app-misc/anki
-	systemd? ( sys-apps/systemd )"
+	systemd? ( sys-apps/systemd )
+	>=dev-lang/python-3.9
+	>=sys-libs/glibc-2.27
+"
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/${MY_PN}-${PV}-linux-qt6"
