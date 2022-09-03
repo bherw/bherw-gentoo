@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=6
+EAPI=7
 
-inherit cmake-utils
+inherit cmake
 
 DESCRIPTION="Generate waveform data and render waveform images from audio files"
 BASE_SERVER_URI="https://github.com/bbc/audiowaveform"
